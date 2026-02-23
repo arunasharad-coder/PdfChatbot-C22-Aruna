@@ -1,17 +1,21 @@
 import streamlit as st
 from PyPDF2 import PdfReader
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_text_splitters import CharacterTextSplitter
-from langchain_community.vectorstores import FAISS
-from langchain_core.prompts import PromptTemplate
 import os
 
-# MODERN 2026 IMPORTS:
-# These paths are guaranteed to work in Python 3.13 
-# because they point directly to the logic, not the old "langchain" shell.
-from langchain.chains.conversational_retrieval.base import ConversationalRetrievalChain
-from langchain_community.chat_message_histories import ChatMessageHistory
+# OpenAI & Core
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_core.prompts import PromptTemplate
+
+# Text Splitting & Vector Store
+from langchain_text_splitters import CharacterTextSplitter
+from langchain_community.vectorstores import FAISS
+
+# Logic (Cleaned up for Python 3.12)
+from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
+# Note: ChatMessageHistory is mostly used internally by the memory, 
+# but keeping it from community is correct if you need it directly.
+from langchain_community.chat_message_histories import ChatMessageHistory
 
 # Set OpenAI API key from secrets
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
@@ -135,6 +139,7 @@ if st.session_state.processComplete:
 # Display initial instructions
 else:
     st.write("👈 Upload your PDFs in the sidebar to get started!")
+
 
 
 
